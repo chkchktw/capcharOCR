@@ -1,0 +1,62 @@
+# -*- coding: utf-8 -*-
+import tkinter as tk
+from tkinter import ttk
+from tkinter import scrolledtext
+from tkinter import messagebox
+import requests
+from PIL import Image
+import pytesseract
+from io import BytesIO
+
+# 函數：執行OCR並顯示結果
+def perform_ocr():
+    url = url_entry.get()
+    
+    try:
+        # 發送HTTP請求並獲取圖片
+        response = requests.get(url)
+        response.raise_for_status()  # 確認請求是否成功
+        captcha_image = Image.open(BytesIO(response.content))
+        
+        # 使用Tesseract進行OCR
+        captcha_text = pytesseract.image_to_string(captcha_image).strip()
+        
+        # 去除空白
+        captcha_text = captcha_text.replace(" ", "")
+        
+        # 顯示結果
+        result_text.config(state=tk.NORMAL)  # 啟用文本框
+        result_text.delete(1.0, tk.END)  # 清空結果文本框
+        result_text.insert(tk.END, captcha_text)
+        result_text.configure(font=("Arial", 30))  # 設置字型大小
+        result_text.config(state=tk.DISABLED)  # 禁用文本框，使其不可編輯
+    except requests.RequestException as e:
+        messagebox.showerror("錯誤", f"HTTP請求錯誤: {e}")
+    except pytesseract.pytesseract.TesseractNotFoundError as e:
+        messagebox.showerror("錯誤", "Tesseract OCR未安裝或配置不正確。")
+    except Exception as e:
+        messagebox.showerror("錯誤", f"未預期的錯誤: {e}")
+
+# 創建主視窗
+window = tk.Tk()
+window.title("OCR程式")
+window.geometry("400x200")  # 調整主視窗大小
+
+# 創建網址輸入框
+url_label = ttk.Label(window, text="請輸入網址:")
+url_label.pack(pady=10)
+url_entry = ttk.Entry(window, width=40)
+url_entry.pack()
+
+# 創建按鈕觸發OCR
+ocr_button = ttk.Button(window, text="執行OCR", command=perform_ocr)
+ocr_button.pack(pady=10)
+
+# 創建顯示OCR結果的文本框
+result_label = ttk.Label(window, text="OCR結果:")
+result_label.pack()
+result_text = scrolledtext.ScrolledText(window, width=40, height=5, font=("Arial", 30), state=tk.DISABLED)
+result_text.pack()
+
+# 啟動主迴圈
+window.mainloop()
