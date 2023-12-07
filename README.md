@@ -16,4 +16,4 @@ sudo apt-get install tesseract-ocr
 pip3 install pytesseract
 
 
-Once OCR capability is confirmed, modify the automated attack program to perform a brute force login.
+Once OCR capability is confirmed, autoattack.py automated attack program to perform a brute force login.
