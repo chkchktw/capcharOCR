@@ -14,3 +14,6 @@ install [tesseract-ocr-w64-setup-v5.3.0.20221214.exe](https://digi.bib.uni-mannh
 linux 
 sudo apt-get install tesseract-ocr
 pip3 install pytesseract
+
+
+Once OCR capability is confirmed, modify the automated attack program to perform a brute force login.
