@@ -9,3 +9,8 @@ pip install Pillow
 pip install pytesseract
 
 install [tesseract-ocr-w64-setup-v5.3.0.20221214.exe](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.3.0.20221214.exe)  (win)
+
+
+linux 
+sudo apt-get install tesseract-ocr
+pip3 install pytesseract
