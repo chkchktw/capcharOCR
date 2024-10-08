@@ -17,3 +17,5 @@ pip3 install pytesseract
 
 
 Once OCR capability is confirmed, autoattack.py automated attack program to perform a brute force login.
+
+ocr_gui2.py use curl download image 
